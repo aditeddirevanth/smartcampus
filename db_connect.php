@@ -1,22 +1,15 @@
 <?php
-
-$servername = "localhost";   
-$username   = "root";         
-$password   = "";            
-$dbname     = "iot_project";  
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
+$conn = mysqli_connect(
+    getenv("MYSQLHOST"),
+    getenv("MYSQLUSER"),
+    getenv("MYSQLPASSWORD"),
+    getenv("MYSQLDATABASE"),
+    getenv("MYSQLPORT")
+);
 
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("Database Connection Failed");
 }
 
-
+echo "Database Connected Successfully";
 ?>
-
-
-
-
-
-
