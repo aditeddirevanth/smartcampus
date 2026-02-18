@@ -1,13 +1,14 @@
 <?php
-$conn = mysqli_connect(
-    getenv("MYSQLHOST"),
-    getenv("MYSQLUSER"),
-    getenv("MYSQLPASSWORD"),
-    getenv("MYSQLDATABASE"),
-    getenv("MYSQLPORT")
-);
+
+$host = getenv("MYSQLHOST");
+$user = getenv("MYSQLUSER");
+$pass = getenv("MYSQLPASSWORD");
+$db   = getenv("MYSQLDATABASE");
+$port = (int) getenv("MYSQLPORT");  // Convert to integer
+
+$conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$conn) {
-    die("Database Connection Failed");
+    die("Database Connection Failed: " . mysqli_connect_error());
 }
 ?>
