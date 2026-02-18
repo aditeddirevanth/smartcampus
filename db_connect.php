@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $conn = mysqli_connect(
     getenv("MYSQLHOST"),
     getenv("MYSQLUSER"),
@@ -8,7 +11,7 @@ $conn = mysqli_connect(
 );
 
 if (!$conn) {
-    die("Database Connection Failed");
+    die("Database Connection Failed: " . mysqli_connect_error());
 }
 
 echo "Database Connected Successfully";
