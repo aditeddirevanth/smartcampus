@@ -1,8 +1,8 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
 RUN docker-php-ext-install mysqli
 
-# Set Apache to use Railway PORT
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+WORKDIR /app
+COPY . .
 
-COPY . /var/www/html/
+CMD php -S 0.0.0.0:$PORT
