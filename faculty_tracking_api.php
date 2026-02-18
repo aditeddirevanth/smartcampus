@@ -1,15 +1,6 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "iot_project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("DB Connection failed");
-}
+include "db_connect.php";
 
 $api_key = $_GET['api_key'] ?? '';
 $beacon_uuid = $_GET['beacon_uuid'] ?? '';
@@ -50,3 +41,4 @@ echo "Updated Successfully";
 
 $conn->close();
 ?>
+
