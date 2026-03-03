@@ -1,9 +1,15 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "iot_project");
+$host = getenv("MYSQLHOST");
+$user = getenv("MYSQLUSER");
+$pass = getenv("MYSQLPASSWORD");
+$db   = getenv("MYSQLDATABASE");
+$port = (int) getenv("MYSQLPORT");  // Convert to integer
+
+$conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$conn) {
-    die("Database Connection Failed");
+    die("Database Connection Failed: " . mysqli_connect_error());
 }
 
 $api_key     = $_GET['api_key'] ?? '';
@@ -64,3 +70,4 @@ if ($stmt->execute()) {
 
 $conn->close();
 ?>
+
