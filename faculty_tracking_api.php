@@ -1,16 +1,21 @@
 <?php
 
-$host = getenv("MYSQLHOST");
-$user = getenv("MYSQLUSER");
-$pass = getenv("MYSQLPASSWORD");
-$db   = getenv("MYSQLDATABASE");
-$port = (int) getenv("MYSQLPORT");  // Convert to integer
+<?php
+
+$host = $_ENV['MYSQLHOST'] ?? $_SERVER['MYSQLHOST'];
+$user = $_ENV['MYSQLUSER'] ?? $_SERVER['MYSQLUSER'];
+$pass = $_ENV['MYSQLPASSWORD'] ?? $_SERVER['MYSQLPASSWORD'];
+$db   = $_ENV['MYSQLDATABASE'] ?? $_SERVER['MYSQLDATABASE'];
+$port = (int) ($_ENV['MYSQLPORT'] ?? $_SERVER['MYSQLPORT']);
 
 $conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$conn) {
     die("Database Connection Failed: " . mysqli_connect_error());
 }
+
+echo "Database Connected Successfully!";
+?>
 
 $api_key     = $_GET['api_key'] ?? '';
 $beacon_uuid = $_GET['beacon_uuid'] ?? '';
@@ -70,4 +75,5 @@ if ($stmt->execute()) {
 
 $conn->close();
 ?>
+
 
