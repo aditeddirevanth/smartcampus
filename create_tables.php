@@ -1,20 +1,7 @@
 <?php
-$conn = mysqli_connect(
-    getenv("MYSQLHOST"),
-    getenv("MYSQLUSER"),
-    getenv("MYSQLPASSWORD"),
-    getenv("MYSQLDATABASE"),
-    getenv("MYSQLPORT")
-);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include "db_connect.php";
 
 $sql = "
-
-$sql = "
-
 CREATE TABLE IF NOT EXISTS student_login (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
@@ -47,9 +34,6 @@ CREATE TABLE IF NOT EXISTS announcements (
     message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-";
-
 ";
 
 if (mysqli_multi_query($conn, $sql)) {
@@ -59,4 +43,3 @@ if (mysqli_multi_query($conn, $sql)) {
 }
 
 mysqli_close($conn);
-?>
