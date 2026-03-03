@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     .login-box {
         padding: 25px 16px;
-        margin-top: 30%;
+        margin-top: 35%;
     }
 
     .login-box h1 {
@@ -192,4 +192,5 @@ function validateForm() {
 
 </body>
 </html>
+
 
