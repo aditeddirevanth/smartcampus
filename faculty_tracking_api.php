@@ -1,44 +1,66 @@
 <?php
 
-include "db_connect.php";
+$conn = mysqli_connect("localhost", "root", "", "iot_project");
 
-$api_key = $_GET['api_key'] ?? '';
+if (!$conn) {
+    die("Database Connection Failed");
+}
+
+$api_key     = $_GET['api_key'] ?? '';
 $beacon_uuid = $_GET['beacon_uuid'] ?? '';
-$esp_id = $_GET['esp_id'] ?? '';
-$rssi = intval($_GET['rssi'] ?? 0);
+$esp_id      = $_GET['esp_id'] ?? '';
+$rssi        = intval($_GET['rssi'] ?? 0);
 
-if ($api_key != "SMARTCAMPUS123") {
+if ($api_key !== "SMARTCAMPUS123") {
     die("Invalid API Key");
 }
 
-/* Find faculty using MAC address */
-$stmt = $conn->prepare("SELECT id FROM faculty_login WHERE beacon_uuid=?");
-$stmt->bind_param("s", $beacon_uuid);
-$stmt->execute();
-$result = $stmt->get_result();
+/* ===== Only allow 10 meter range ===== */
+if ($rssi <= -88) {
+    die("Outside 10 Meter Range");
+}
 
-if ($result->num_rows == 0) {
+/* ===== Find Faculty ===== */
+$facultyQuery = $conn->prepare("
+SELECT id FROM faculty_login 
+WHERE LOWER(beacon_uuid) = LOWER(?)
+");
+
+$facultyQuery->bind_param("s", $beacon_uuid);
+$facultyQuery->execute();
+$result = $facultyQuery->get_result();
+
+if (!$row = $result->fetch_assoc()) {
     die("Faculty Not Found");
 }
 
-$row = $result->fetch_assoc();
 $faculty_id = $row['id'];
 
-/* Insert or Update with strongest RSSI */
-$stmt2 = $conn->prepare("
+/* ===== Always Insert or Update ===== */
+$stmt = $conn->prepare("
 INSERT INTO faculty_tracking (faculty_id, esp_id, rssi)
 VALUES (?, ?, ?)
 ON DUPLICATE KEY UPDATE
-esp_id = IF(VALUES(rssi) > rssi, VALUES(esp_id), esp_id),
-rssi = IF(VALUES(rssi) > rssi, VALUES(rssi), rssi),
-last_seen = CURRENT_TIMESTAMP
+    esp_id = VALUES(esp_id),
+    rssi = VALUES(rssi),
+    last_seen = CURRENT_TIMESTAMP
 ");
 
-$stmt2->bind_param("isi", $faculty_id, $esp_id, $rssi);
-$stmt2->execute();
+$stmt->bind_param("isi", $faculty_id, $esp_id, $rssi);
 
-echo "Updated Successfully";
+if ($stmt->execute()) {
+
+    if ($stmt->affected_rows == 1) {
+        echo "Inserted";
+    } elseif ($stmt->affected_rows == 2) {
+        echo "Updated";
+    } else {
+        echo "No Change";
+    }
+
+} else {
+    echo "SQL Error: " . $stmt->error;
+}
 
 $conn->close();
 ?>
-
