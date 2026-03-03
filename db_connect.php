@@ -19,6 +19,3 @@ $conn = mysqli_connect($host, $user, $pass, $db, $port);
 if (!$conn) {
     die("Database Connection Failed: " . mysqli_connect_error());
 }
-
-echo "Database Connected Successfully!";
-?>
