@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         width: 95%;
         max-width: 360px;
         padding: 30px 20px;
-        margin-top: 40px;
+        margin-top: 30%;
         border-radius: 14px;
     }
 
@@ -193,6 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     .login-box {
         padding: 25px 16px;
+        margin-top: 30%;
     }
 
     .login-box h1 {
