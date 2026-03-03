@@ -1,10 +1,18 @@
 <?php
 
-$host = $_ENV['MYSQLHOST'] ?? $_SERVER['MYSQLHOST'];
-$user = $_ENV['MYSQLUSER'] ?? $_SERVER['MYSQLUSER'];
-$pass = $_ENV['MYSQLPASSWORD'] ?? $_SERVER['MYSQLPASSWORD'];
-$db   = $_ENV['MYSQLDATABASE'] ?? $_SERVER['MYSQLDATABASE'];
-$port = (int) ($_ENV['MYSQLPORT'] ?? $_SERVER['MYSQLPORT']);
+$databaseUrl = getenv("DATABASE_URL");
+
+if (!$databaseUrl) {
+    die("DATABASE_URL not found");
+}
+
+$url = parse_url($databaseUrl);
+
+$host = $url["host"];
+$user = $url["user"];
+$pass = $url["pass"];
+$db   = ltrim($url["path"], "/");
+$port = $url["port"];
 
 $conn = mysqli_connect($host, $user, $pass, $db, $port);
 
