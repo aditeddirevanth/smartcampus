@@ -5,9 +5,9 @@ include "db_connect.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/phpmailer/src/Exception.php';
-require __DIR__ . '/phpmailer/src/PHPMailer.php';
-require __DIR__ . '/phpmailer/src/SMTP.php';
+require __DIR__ . '/PHPMailer/src/Exception.php';
+require __DIR__ . '/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/PHPMailer/src/SMTP.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -224,3 +224,4 @@ $result = $stmt->get_result();
 </form>
 </body>
 </html>
+
