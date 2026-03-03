@@ -17,31 +17,41 @@ body{
     background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
     background-repeat: no-repeat;
     background-attachment: fixed; 
+    margin:0;
     padding:0;
 }
 
+/* Desktop Layout */
 .body{
     display:flex;
     justify-content:space-evenly;
-    margin-left:200px;
-    margin-right:200px;
+    align-items:flex-start;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding:20px;
+    gap:20px;
+}
+
+
+@media (max-width: 992px) {
+    .body {
+        flex-wrap: wrap;
+        justify-content:center;
+    }
 }
 
 @media (max-width: 768px) {
-
     .body {
-        display:inline;
-        justify-content:none;
-        padding:10px;;
+        flex-direction: column;
+        align-items:center;
+        padding:15px;
     }
 }
-    
-@media (max-width: 480px) {
 
+/* Small Phones */
+@media (max-width: 480px) {
     .body {
-        display:inline;
-        justify-content:none;;
-        padding:0;
+        padding:10px;
     }
 }
 
@@ -67,4 +77,3 @@ if ($_COOKIE['role'] === 'admin') {
 
 </body>
 </html>
-
