@@ -11,7 +11,8 @@ SELECT
     f.beacon_uuid,
     t.esp_id,
     t.rssi,
-    t.last_seen
+    t.last_seen,
+    TIMESTAMPDIFF(SECOND, t.last_seen, NOW()) AS seconds_diff
 FROM faculty_login f
 LEFT JOIN faculty_tracking t 
 ON f.id = t.faculty_id
@@ -255,21 +256,29 @@ $result = mysqli_query($conn, $query);
 <?php while ($row = mysqli_fetch_assoc($result)): ?>
 
     <?php
-    $status = "Idle";
-    $signal= "● Weak Signal";
-    $signal_class= "weak_cls";
-    $status_class = "status_idle";
+$status = "Idle";
+$status_class = "status_idle";
 
-    if (!empty($row['last_seen'])) {
-        $diff = time() - strtotime($row['last_seen']);
-        if ($diff <= 30) { 
-            $status = "Active";
-            $signal = "● Excellent Signal";
-            $status_class = "status_active";
-            $signal_class = "strong_cls";
-        }
+$signal = "● Weak Signal";
+$signal_class = "weak_cls";
+
+$diff = $row['seconds_diff'] ?? 999999;
+
+if ($diff <= 600) {
+
+    $status = "Active";
+    $status_class = "status_active";
+
+    $rssi = $row['rssi'] ?? -100;
+
+    if ($rssi > -75) {
+        $signal = "● Strong Signal";
+        $signal_class = "strong_cls";
+    } else {
+        $signal = "● Weak Signal";
+        $signal_class = "weak_cls";
     }
-    ?>
+}    ?>
 
 <div class="faculty_card">
 
@@ -313,4 +322,3 @@ $result = mysqli_query($conn, $query);
 <?php endwhile; ?>
 
 </div>
-
