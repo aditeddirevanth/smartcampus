@@ -31,8 +31,8 @@ body{
 
     .body {
         display:inline;
-        justify-content:none;;
-
+        justify-content:none;
+        padding:10px;;
     }
 }
     
@@ -67,3 +67,4 @@ if ($_COOKIE['role'] === 'admin') {
 
 </body>
 </html>
+
