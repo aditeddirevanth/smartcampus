@@ -256,16 +256,22 @@ $result = mysqli_query($conn, $query);
 <?php while ($row = mysqli_fetch_assoc($result)): ?>
 
     <?php
+
 $status = "Idle";
 $status_class = "status_idle";
 
 $signal = "● Weak Signal";
 $signal_class = "weak_cls";
 
+
+$rssi_value = $row['rssi'] ?? "--";
+$location_value = $row['esp_id'] ?? "Unknown";
+
 $diff = $row['seconds_diff'] ?? 999999;
 
 if ($diff <= 600) {
 
+    
     $status = "Active";
     $status_class = "status_active";
 
@@ -278,7 +284,18 @@ if ($diff <= 600) {
         $signal = "● Weak Signal";
         $signal_class = "weak_cls";
     }
-}    ?>
+
+} else {
+
+
+    $rssi_value = "--";
+    $location_value = "--";
+
+    $signal = "● Weak Signal";
+    $signal_class = "weak_cls";
+}
+
+ ?>
 
 <div class="faculty_card">
 
@@ -294,7 +311,7 @@ if ($diff <= 600) {
         </div>
 
         <div class="rssi">
-            <i class="fa-solid fa-signal signal-animate"></i> RSSI: <?php echo $row['rssi'] ?? '--'; ?> dBm
+            <i class="fa-solid fa-signal signal-animate"></i> RSSI: <?php echo $rssi_value; ?><?php echo ($rssi_value !== "--") ? " dBm" : ""; ?>
         </div>
 
         <div class="ble_id">
@@ -305,7 +322,9 @@ if ($diff <= 600) {
 </div>
 
     <div class="faculty_details">
-        <div><i class="fa-solid fa-location-dot"></i> Location: <?php echo $row['esp_id'] ?? 'Unknown'; ?></div>
+        <div>
+            <i class="fa-solid fa-location-dot"></i> Location: <?php echo $location_value; ?>
+        </div>
 
         <div>
             <i class="fa-regular fa-clock"></i> Last seen: <?php echo $row['last_seen'] ?? '—'; ?>
