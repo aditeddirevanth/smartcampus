@@ -46,7 +46,7 @@ $result = $stmt->get_result();
             $mail->SMTPSecure = 'ssl';
             $mail->Port       = 465;
 
-            $mail->setFrom('aditeddirevanth@gmail.com', 'Shanvi Collections');
+            $mail->setFrom('aditeddirevanth@gmail.com', 'Smart Campus Automation System');
             $mail->addAddress($row['email']);
 
             $mail->isHTML(true);
@@ -68,7 +68,7 @@ $result = $stmt->get_result();
 
                     <br>
                     <p><b><big>Thank you,</big></b><br>
-                    Shanvi Collections<br>
+                    Smart Campus<br>
                     Support Team</p>
                 </div>
             ";
@@ -170,7 +170,7 @@ $result = $stmt->get_result();
         width: 95%;
         max-width: 360px;
         padding: 30px 20px;
-        margin-top: 40px;
+        margin-top: 30%;
         border-radius: 14px;
     }
 
@@ -203,6 +203,7 @@ $result = $stmt->get_result();
 
     .login-box {
         padding: 25px 16px;
+        margin-top: 40%;
     }
 
     .login-box h1 {
