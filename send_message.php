@@ -57,11 +57,12 @@ input{
     font-size:16px;
     background-color:skyblue;
     border:none;
-margin-left:0;
+    margin-left:0;
 }
 
 .textarea1{
     width:86%;
+    height:100px;
     padding:8px;
     margin-bottom:15px;
     font-size:16px;
@@ -254,15 +255,6 @@ margin-left:0;
         <span>BCA 3rd year</span>
     </label>
 
-    <label class="classroom-card">
-        <input type="checkbox" name="classroom[]" value="MCA 1st year">
-        <span>MCA 1st year</span>
-    </label>
-
-    <label class="classroom-card">
-        <input type="checkbox" name="classroom[]" value="MCA 2nd year">
-        <span>MCA 2nd year</span>
-    </label>
 
 </div>              
 
